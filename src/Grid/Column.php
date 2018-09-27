@@ -236,7 +236,7 @@ class Column
      */
     protected function formatLabel($label)
     {
-        $label = $label ?: ucfirst($this->name);
+        $label = $label ?: $this->setLabel($this->name);
 
         return str_replace(['.', '_'], ' ', $label);
     }
