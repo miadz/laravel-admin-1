@@ -87,6 +87,12 @@ class Form implements Renderable
      */
     public function __construct($data = [])
     {
+        $this->initData($data);
+        $this->initFormAttributes();
+    }
+
+    public function initData($data)
+    {
         if ($data instanceof Arrayable) {
             $data = $data->toArray();
         }
@@ -94,10 +100,7 @@ class Form implements Renderable
         if (!empty($data)) {
             $this->data = $data;
         }
-
-        $this->initFormAttributes();
     }
-
     /**
      * Initialize the form attributes.
      */
