@@ -3,13 +3,13 @@
 namespace Encore\Admin;
 
 use Closure;
-use Encore\Admin\Auth\Database\Menu;
+use Encore\Admin\Controllers\AuthController;
 use Encore\Admin\Layout\Content;
+use Encore\Admin\Traits\HasAssets;
 use Encore\Admin\Widgets\Navbar;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
 
 /**
@@ -17,6 +17,15 @@ use InvalidArgumentException;
  */
 class Admin
 {
+    use HasAssets;
+
+    /**
+     * The Laravel admin version.
+     *
+     * @var string
+     */
+    const VERSION = '1.6.5';
+
     /**
      * @var Navbar
      */
@@ -25,28 +34,35 @@ class Admin
     /**
      * @var array
      */
-    public static $script = [];
-
-    /**
-     * @var array
-     */
-    public static $css = [];
-
-    /**
-     * @var array
-     */
-    public static $js = [];
-
-    /**
-     * @var array
-     */
     public static $extensions = [];
+
+    /**
+     * @var []Closure
+     */
+    public static $booting;
+
+    /**
+     * @var []Closure
+     */
+    public static $booted;
+
+    /**
+     * Returns the long version of Laravel-admin.
+     *
+     * @return string The long application version
+     */
+    public static function getLongVersion()
+    {
+        return sprintf('Laravel-admin <comment>version</comment> <info>%s</info>', self::VERSION);
+    }
 
     /**
      * @param $model
      * @param Closure $callable
      *
      * @return \Encore\Admin\Grid
+     *
+     * @deprecated since v1.6.1
      */
     public function grid($model, Closure $callable)
     {
@@ -58,6 +74,8 @@ class Admin
      * @param Closure $callable
      *
      * @return \Encore\Admin\Form
+     *
+     *  @deprecated since v1.6.1
      */
     public function form($model, Closure $callable)
     {
@@ -77,9 +95,26 @@ class Admin
     }
 
     /**
+     * Build show page.
+     *
+     * @param $model
+     * @param mixed $callable
+     *
+     * @return Show
+     *
+     * @deprecated since v1.6.1
+     */
+    public function show($model, $callable = null)
+    {
+        return new Show($this->getModel($model), $callable);
+    }
+
+    /**
      * @param Closure $callable
      *
      * @return \Encore\Admin\Layout\Content
+     *
+     * @deprecated since v1.6.1
      */
     public function content(Closure $callable = null)
     {
@@ -93,7 +128,7 @@ class Admin
      */
     public function getModel($model)
     {
-        if ($model instanceof EloquentModel) {
+        if ($model instanceof Model) {
             return $model;
         }
 
@@ -105,73 +140,15 @@ class Admin
     }
 
     /**
-     * Add css or get all css.
-     *
-     * @param null $css
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
-    public static function css($css = null)
-    {
-        if (!is_null($css)) {
-            self::$css = array_merge(self::$css, (array) $css);
-
-            return;
-        }
-
-        $css = array_get(Form::collectFieldAssets(), 'css', []);
-
-        static::$css = array_merge(static::$css, $css);
-
-        return view('admin::partials.css', ['css' => array_unique(static::$css)]);
-    }
-
-    /**
-     * Add js or get all js.
-     *
-     * @param null $js
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
-    public static function js($js = null)
-    {
-        if (!is_null($js)) {
-            self::$js = array_merge(self::$js, (array) $js);
-
-            return;
-        }
-
-        $js = array_get(Form::collectFieldAssets(), 'js', []);
-
-        static::$js = array_merge(static::$js, $js);
-
-        return view('admin::partials.js', ['js' => array_unique(static::$js)]);
-    }
-
-    /**
-     * @param string $script
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
-     */
-    public static function script($script = '')
-    {
-        if (!empty($script)) {
-            self::$script = array_merge(self::$script, (array) $script);
-
-            return;
-        }
-
-        return view('admin::partials.script', ['script' => array_unique(self::$script)]);
-    }
-
-    /**
      * Left sider-bar menu.
      *
      * @return array
      */
     public function menu()
     {
-        return (new Menu())->toTree();
+        $menuModel = config('admin.database.menu_model');
+
+        return (new $menuModel())->toTree();
     }
 
     /**
@@ -232,6 +209,7 @@ class Admin
      */
     public function registerAuthRoutes()
     {
+<<<<<<< HEAD
 //        $attributes = [
 //            'prefix'     => config('admin.route.prefix'),
 //            'namespace'  => 'Encore\Admin\Controllers',
@@ -257,6 +235,35 @@ class Admin
 //            $router->get('auth/setting', 'AuthController@getSetting');
 //            $router->put('auth/setting', 'AuthController@putSetting');
 //        });
+=======
+        $attributes = [
+            'prefix'     => config('admin.route.prefix'),
+            'middleware' => config('admin.route.middleware'),
+        ];
+
+        app('router')->group($attributes, function ($router) {
+
+            /* @var \Illuminate\Routing\Router $router */
+            $router->namespace('Encore\Admin\Controllers')->group(function ($router) {
+
+                /* @var \Illuminate\Routing\Router $router */
+                $router->resource('auth/users', 'UserController');
+                $router->resource('auth/roles', 'RoleController');
+                $router->resource('auth/permissions', 'PermissionController');
+                $router->resource('auth/menu', 'MenuController', ['except' => ['create']]);
+                $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
+            });
+
+            $authController = config('admin.auth.controller', AuthController::class);
+
+            /* @var \Illuminate\Routing\Router $router */
+            $router->get('auth/login', $authController.'@getLogin');
+            $router->post('auth/login', $authController.'@postLogin');
+            $router->get('auth/logout', $authController.'@getLogout');
+            $router->get('auth/setting', $authController.'@getSetting');
+            $router->put('auth/setting', $authController.'@putSetting');
+        });
+>>>>>>> upstream/master
     }
 
     /**
@@ -270,5 +277,33 @@ class Admin
     public static function extend($name, $class)
     {
         static::$extensions[$name] = $class;
+    }
+
+    /**
+     * @param callable $callback
+     */
+    public static function booting(callable $callback)
+    {
+        static::$booting[] = $callback;
+    }
+
+    /**
+     * @param callable $callback
+     */
+    public static function booted(callable $callback)
+    {
+        static::$booted[] = $callback;
+    }
+
+    /*
+     * Disable Pjax for current Request
+     *
+     * @return void
+     */
+    public function disablePjax()
+    {
+        if (request()->pjax()) {
+            request()->headers->set('X-PJAX', false);
+        }
     }
 }

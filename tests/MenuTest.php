@@ -71,6 +71,6 @@ class MenuTest extends TestCase
 
         $this->visit('admin/auth/menu/5/edit')
             ->see('Menu')
-            ->submitForm('Save', ['parent_id' => 5]);
+            ->submitForm('Submit', ['parent_id' => 5]);
     }
 }
