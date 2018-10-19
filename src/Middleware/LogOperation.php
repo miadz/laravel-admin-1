@@ -22,17 +22,13 @@ class LogOperation
         if ($this->shouldLogOperation($request)) {
             $log = [
                 'user_id' => Admin::user()->id,
-                'path'    => substr($request->path(), 0, 255),
+                'path'    => $request->path(),
                 'method'  => $request->method(),
                 'ip'      => $request->getClientIp(),
                 'input'   => json_encode($request->input()),
             ];
 
-            try {
-                OperationLogModel::create($log);
-            } catch (\Exception $exception) {
-                // pass
-            }
+            OperationLogModel::create($log);
         }
 
         return $next($request);
@@ -47,28 +43,7 @@ class LogOperation
     {
         return config('admin.operation_log.enable')
             && !$this->inExceptArray($request)
-            && $this->inAllowedMethods($request->method())
             && Admin::user();
-    }
-
-    /**
-     * Whether requests using this method are allowed to be logged.
-     *
-     * @param string $method
-     *
-     * @return bool
-     */
-    protected function inAllowedMethods($method)
-    {
-        $allowedMethods = collect(config('admin.operation_log.allowed_methods'))->filter();
-
-        if ($allowedMethods->isEmpty()) {
-            return true;
-        }
-
-        return $allowedMethods->map(function ($method) {
-            return strtoupper($method);
-        })->contains($method);
     }
 
     /**

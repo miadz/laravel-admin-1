@@ -3,25 +3,16 @@
 namespace Encore\Admin\Grid\Displayers;
 
 use Encore\Admin\Admin;
-use Illuminate\Contracts\Support\Arrayable;
 
 class Checkbox extends AbstractDisplayer
 {
     public function display($options = [])
     {
-        if ($options instanceof \Closure) {
-            $options = $options->call($this, $this->row);
-        }
-
         $radios = '';
         $name = $this->column->getName();
 
         if (is_string($this->value)) {
             $this->value = explode(',', $this->value);
-        }
-
-        if ($this->value instanceof Arrayable) {
-            $this->value = $this->value->toArray();
         }
 
         foreach ($options as $value => $label) {
@@ -61,17 +52,14 @@ $('form.grid-checkbox-$name').on('submit', function () {
         return $(el).val();
     }).get();
 
-    var data = {
-        $name: values,
-        _token: LA.token,
-        _method: 'PUT'
-    };
-    
     $.ajax({
         url: "{$this->getResource()}/" + $(this).data('key'),
         type: "POST",
-        contentType: 'application/json;charset=utf-8',
-        data: JSON.stringify(data),
+        data: {
+            $name: values,
+            _token: LA.token,
+            _method: 'PUT'
+        },
         success: function (data) {
             toastr.success(data.message);
         }

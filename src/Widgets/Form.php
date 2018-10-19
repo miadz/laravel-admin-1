@@ -86,13 +86,6 @@ class Form implements Renderable
     protected $disable_footer = true;
 
     /**
-     * Available buttons.
-     *
-     * @var array
-     */
-    protected $buttons = ['reset', 'submit'];
-
-    /**
      * Form constructor.
      *
      * @param array $data
@@ -197,30 +190,6 @@ class Form implements Renderable
     }
 
     /**
-     * Disable reset button.
-     *
-     * @return $this
-     */
-    public function disableReset()
-    {
-        array_delete($this->buttons, 'reset');
-
-        return $this;
-    }
-
-    /**
-     * Disable submit button.
-     *
-     * @return $this
-     */
-    public function disableSubmit()
-    {
-        array_delete($this->buttons, 'submit');
-
-        return $this;
-    }
-
-    /**
      * Set field and label width in current form.
      *
      * @param int $fieldWidth
@@ -284,7 +253,6 @@ class Form implements Renderable
         }
 
         return [
-<<<<<<< HEAD
             'fields'        => $this->fields,
             'attributes'    => $this->formatAttribute(),
             'method'        => $this->attributes['method'],
@@ -293,12 +261,6 @@ class Form implements Renderable
             'rules'         => $this->getRules(),
             'rules_message' => $this->getRuleMessages(),
             'disable_footer'   => $this->disable_footer,
-=======
-            'fields'     => $this->fields,
-            'attributes' => $this->formatAttribute(),
-            'method'     => $this->attributes['method'],
-            'buttons'    => $this->buttons,
->>>>>>> upstream/master
         ];
     }
 

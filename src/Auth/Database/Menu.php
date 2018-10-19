@@ -17,16 +17,14 @@ use Illuminate\Support\Facades\DB;
  */
 class Menu extends Model
 {
-    use AdminBuilder, ModelTree {
-        ModelTree::boot as treeBoot;
-    }
+    use ModelTree, AdminBuilder;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'permission'];
+    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri'];
 
     /**
      * Create a new Eloquent model instance.
@@ -63,22 +61,10 @@ class Menu extends Model
      */
     public function allNodes() : array
     {
-        $connection = config('admin.database.connection') ?: config('database.default');
-        $orderColumn = DB::connection($connection)->getQueryGrammar()->wrap($this->orderColumn);
-
+        $orderColumn = DB::getQueryGrammar()->wrap($this->orderColumn);
         $byOrder = $orderColumn.' = 0,'.$orderColumn;
 
         return static::with('roles')->orderByRaw($byOrder)->get()->toArray();
-    }
-
-    /**
-     * determine if enable menu bind permission.
-     *
-     * @return bool
-     */
-    public function withPermission()
-    {
-        return (bool) config('admin.menu_bind_permission');
     }
 
     /**
@@ -86,7 +72,6 @@ class Menu extends Model
      *
      * @return void
      */
-<<<<<<< HEAD
 //    protected static function boot()
 //    {
 //        parent::boot();
@@ -95,14 +80,4 @@ class Menu extends Model
 //            $model->roles()->detach();
 //        });
 //    }
-=======
-    protected static function boot()
-    {
-        static::treeBoot();
-
-        static::deleting(function ($model) {
-            $model->roles()->detach();
-        });
-    }
->>>>>>> upstream/master
 }

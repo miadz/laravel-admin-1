@@ -47,7 +47,7 @@ $('{$this->getElementClassSelector()}').iconpicker($startOptions);
 
 EOT;
 
-        $this->prepend('<i class="fa fa-pencil fa-fw"></i>')
+        $this->prepend('<i class="fa fa-pencil"></i>')
             ->defaultAttribute('style', 'width: 140px');
 
         return parent::render();

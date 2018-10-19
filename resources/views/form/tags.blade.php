@@ -9,20 +9,11 @@
     <div class="{{$viewClass['field']}}">
 
         @include('admin::form.error')
-<<<<<<< HEAD
         <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}[]" multiple="multiple"
                 data-placeholder="{{ $placeholder }}" {!! $attributes !!} >
             @foreach($value as $select)
                 <option value="{{$select}}" selected>{{$select}}</option>
-=======
-
-        <select class="form-control {{$class}}" style="width: 100%;" name="{{$name}}[]" multiple="multiple" data-placeholder="{{ $placeholder }}" {!! $attributes !!} >
-
-            @foreach($options as $key => $option)
-                <option value="{{ $keyAsValue ? $key : $option}}" {{ in_array($option, $value) ? 'selected' : '' }}>{{$option}}</option>
->>>>>>> upstream/master
             @endforeach
-
         </select>
         <input type="hidden" name="{{$name}}[]"/>
         @include('admin::form.help-block')

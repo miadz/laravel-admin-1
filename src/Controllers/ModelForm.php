@@ -1,7 +1,6 @@
 <?php
 namespace Encore\Admin\Controllers;
 
-<<<<<<< HEAD
 use Encore\Admin\Form\Builder;
 
 trait ModelForm
@@ -60,14 +59,3 @@ trait ModelForm
         return $this->form()->store();
     }
 }
-=======
-/**
- * Trait ModelForm.
- *
- * @deprecated Use `HasResourceActions` instead.
- */
-trait ModelForm
-{
-    use HasResourceActions;
-}
->>>>>>> upstream/master

@@ -23,9 +23,7 @@ class Editable extends AbstractDisplayer
      *
      * @var array
      */
-    protected $options = [
-        'emptytext'  => '<i class="fa fa-pencil"></i>',
-    ];
+    protected $options = [];
 
     /**
      * Add options for editable.
@@ -63,10 +61,6 @@ class Editable extends AbstractDisplayer
      */
     public function select($options = [])
     {
-        if ($options instanceof \Closure) {
-            $options = $options->call($this, $this->row);
-        }
-
         $source = [];
 
         foreach ($options as $key => $value) {

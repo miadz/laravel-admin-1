@@ -17,7 +17,7 @@ class Text extends Field
     {
         $this->initPlainInput();
 
-        $this->prepend('<i class="fa fa-pencil fa-fw"></i>')
+        $this->prepend('<i class="fa fa-pencil"></i>')
             ->defaultAttribute('type', 'text')
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->elementName ?: $this->formatName($this->column))
@@ -25,11 +25,9 @@ class Text extends Field
             ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('placeholder', $this->getPlaceholder());
 
-        $this->addVariables([
+        return parent::render()->with([
             'prepend' => $this->prepend,
             'append'  => $this->append,
         ]);
-
-        return parent::render();
     }
 }

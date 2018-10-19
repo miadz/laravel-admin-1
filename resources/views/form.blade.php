@@ -2,12 +2,11 @@
     <div class="box-header with-border">
         <h3 class="box-title">{{ $form->title() }}</h3>
         <div class="box-tools">
-            {!! $form->renderTools() !!}
+            {!! $form->renderHeaderTools() !!}
         </div>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
-<<<<<<< HEAD
     @php
         /** @var \Encore\Admin\Form\Builder $form */
            $_class = "";
@@ -45,9 +44,6 @@
             @include('admin::form.tab', compact('tabObj'))
         @else
             <div class="fields-group">
-=======
-    {!! $form->open(['class' => "form-horizontal"]) !!}
->>>>>>> upstream/master
 
                 @if($form->hasRows())
                     @foreach($form->getRows() as $row)
@@ -73,7 +69,6 @@
         <div class="{{$width['label']}}">
 
         </div>
-<<<<<<< HEAD
         <div class="{{$width['field']}}">
 
             {!! $form->submitButton() !!}
@@ -98,15 +93,6 @@
     {!! $form->close() !!}
 
 
-=======
-        <!-- /.box-body -->
-
-        {!! $form->renderFooter() !!}
-
-        @foreach($form->getHiddenFields() as $field)
-            {!! $field->render() !!}
-        @endforeach
->>>>>>> upstream/master
 
 </div>
 

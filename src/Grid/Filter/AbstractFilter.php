@@ -10,11 +10,7 @@ use Encore\Admin\Grid\Filter\Presenter\Presenter;
 use Encore\Admin\Grid\Filter\Presenter\Radio;
 use Encore\Admin\Grid\Filter\Presenter\Select;
 use Encore\Admin\Grid\Filter\Presenter\Text;
-<<<<<<< HEAD
 use Lang;
-=======
-use Illuminate\Support\Collection;
->>>>>>> upstream/master
 
 /**
  * Class AbstractFilter.
@@ -87,11 +83,6 @@ abstract class AbstractFilter
     protected $view = 'admin::filter.where';
 
     /**
-     * @var Collection
-     */
-    public $group;
-
-    /**
      * AbstractFilter constructor.
      *
      * @param $column
@@ -155,17 +146,15 @@ abstract class AbstractFilter
         $columns = explode('.', $column);
 
         if (count($columns) == 1) {
-            $name = $columns[0];
-        } else {
-            $name = array_shift($columns);
-            foreach ($columns as $column) {
-                $name .= "[$column]";
-            }
+            return $columns[0];
         }
 
-        $parenName = $this->parent->getName();
+        $name = array_shift($columns);
+        foreach ($columns as $column) {
+            $name .= "[$column]";
+        }
 
-        return $parenName ? "{$parenName}_{$name}" : $name;
+        return $name;
     }
 
     /**
@@ -407,29 +396,13 @@ abstract class AbstractFilter
     }
 
     /**
-     * Set element id.
-     *
-     * @param string $id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = $this->formatId($id);
-
-        return $this;
-    }
-
-    /**
      * Get column name of current filter.
      *
      * @return string
      */
     public function getColumn()
     {
-        $parenName = $this->parent->getName();
-
-        return $parenName ? "{$parenName}_{$this->column}" : $this->column;
+        return $this->column;
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Auth\Database\Menu;
+use Encore\Admin\Auth\Database\Role;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
@@ -12,44 +15,36 @@ use Illuminate\Routing\Controller;
 
 class MenuController extends Controller
 {
-    use HasResourceActions;
+    use ModelForm;
 
     /**
      * Index interface.
      *
-     * @param Content $content
-     *
      * @return Content
      */
-    public function index(Content $content)
+    public function index()
     {
-        return $content
-            ->header(trans('admin.menu'))
-            ->description(trans('admin.list'))
-            ->row(function (Row $row) {
+        return Admin::content(function (Content $content) {
+            $content->header(trans('admin.menu'));
+            $content->description(trans('admin.list'));
+
+            $content->row(function (Row $row) {
                 $row->column(6, $this->treeView()->render());
 
                 $row->column(6, function (Column $column) {
                     $form = new \Encore\Admin\Widgets\Form();
                     $form->action(admin_base_path('auth/menu'));
 
-                    $menuModel = config('admin.database.menu_model');
-                    $permissionModel = config('admin.database.permissions_model');
-                    $roleModel = config('admin.database.roles_model');
-
-                    $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
+                    $form->select('parent_id', trans('admin.parent_id'))->options(Menu::selectOptions());
                     $form->text('title', trans('admin.title'))->rules('required');
                     $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
                     $form->text('uri', trans('admin.uri'));
-                    $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
-                    if ((new $menuModel())->withPermission()) {
-                        $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
-                    }
-                    $form->hidden('_token')->default(csrf_token());
+                    $form->multipleSelect('roles', trans('admin.roles'))->options(Role::all()->pluck('name', 'id'));
 
                     $column->append((new Box(trans('admin.new'), $form))->style('success'));
                 });
             });
+        });
     }
 
     /**
@@ -69,9 +64,7 @@ class MenuController extends Controller
      */
     protected function treeView()
     {
-        $menuModel = config('admin.database.menu_model');
-
-        return $menuModel::tree(function (Tree $tree) {
+        return Menu::tree(function (Tree $tree) {
             $tree->disableCreate();
 
             $tree->branch(function ($branch) {
@@ -95,17 +88,18 @@ class MenuController extends Controller
     /**
      * Edit interface.
      *
-     * @param string  $id
-     * @param Content $content
+     * @param string $id
      *
      * @return Content
      */
-    public function edit($id, Content $content)
+    public function edit($id)
     {
-        return $content
-            ->header(trans('admin.menu'))
-            ->description(trans('admin.edit'))
-            ->row($this->form()->edit($id));
+        return Admin::content(function (Content $content) use ($id) {
+            $content->header(trans('admin.menu'));
+            $content->description(trans('admin.edit'));
+
+            $content->row($this->form()->edit($id));
+        });
     }
 
     /**
@@ -115,27 +109,18 @@ class MenuController extends Controller
      */
     public function form()
     {
-        $menuModel = config('admin.database.menu_model');
-        $permissionModel = config('admin.database.permissions_model');
-        $roleModel = config('admin.database.roles_model');
+        return Menu::form(function (Form $form) {
+            $form->display('id', 'ID');
 
-        $form = new Form(new $menuModel());
+            $form->select('parent_id', trans('admin.parent_id'))->options(Menu::selectOptions());
+            $form->text('title', trans('admin.title'))->rules('required');
+            $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
+            $form->text('uri', trans('admin.uri'));
+            $form->multipleSelect('roles', trans('admin.roles'))->options(Role::all()->pluck('name', 'id'));
 
-        $form->display('id', 'ID');
-
-        $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
-        $form->text('title', trans('admin.title'))->rules('required');
-        $form->icon('icon', trans('admin.icon'))->default('fa-bars')->rules('required')->help($this->iconHelp());
-        $form->text('uri', trans('admin.uri'));
-        $form->multipleSelect('roles', trans('admin.roles'))->options($roleModel::all()->pluck('name', 'id'));
-        if ($form->model()->withPermission()) {
-            $form->select('permission', trans('admin.permission'))->options($permissionModel::pluck('name', 'slug'));
-        }
-
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
-
-        return $form;
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+        });
     }
 
     /**
