@@ -32,6 +32,8 @@ use phpDocumentor\Reflection\Types\This;
  * @method Field\Editor         editor($name, $label = '')
  * @method Field\File           file($name, $label = '')
  * @method Field\Image          image($name, $label = '')
+ * @method Field\MultipleImage  multipleImage($column, $label = '')
+ * @method Field\MultipleFile   multipleFile($column, $label = '')
  * @method Field\Date           date($name, $label = '')
  * @method Field\Datetime       datetime($name, $label = '')
  * @method Field\Time           time($name, $label = '')
@@ -51,7 +53,7 @@ use phpDocumentor\Reflection\Types\This;
  * @method \App\Admin\Extensions\Form\Script script($script, $arguments)
  * @method \App\Admin\Extensions\Form\GeoCompleteMap  geocompletemap($latitude, $longitude, $label = '')
  * @method \App\Admin\Extensions\Form\multiSelectTag  multiselect_tags($column, $label = '')
- * @method \App\Admin\Extensions\Form\InstagramAddSelect2  instagram_add_select2($column, $label = '', $api_url, $type,$modal_get_url)
+ * @method \App\Admin\Extensions\Form\InstagramAddSelect2  instagram_add_select2($column, $label = '', $api_url, $type, $modal_get_url)
  * @method \App\Admin\Extensions\Form\Cropper  cropper($column, $label = '')
  * @method \App\Admin\Extensions\Form\PersianDate  pdate($column, $label = '')
  * @method \App\Admin\Extensions\Form\TimePicker  timepicker($column, $label = '')
@@ -59,6 +61,7 @@ use phpDocumentor\Reflection\Types\This;
  * @method \App\Admin\Extensions\Form\Json  json($column, $label = '')
  * @method \App\Admin\Extensions\Form\CkEditor  ckeditor($column, $label = '')
  * @method \App\Admin\Extensions\Form\MultipleFileConverter  multiple_file_converter($column, $label = '')
+ * @method \App\Admin\Extensions\Form\displayimage  displayimage($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -79,6 +82,8 @@ class Form implements Renderable
      * @var array
      */
     protected $attributes = [];
+
+    protected $disable_footer = true;
 
     /**
      * Form constructor.
@@ -101,6 +106,7 @@ class Form implements Renderable
             $this->data = $data;
         }
     }
+
     /**
      * Initialize the form attributes.
      */
@@ -115,6 +121,15 @@ class Form implements Renderable
             'fieldWidth'     => 8,
             'labelWidth'     => 2,
         ];
+    }
+
+    /**
+     * if $disable_footer = true , then footer showed ,else hide footer of form and not rendering
+     * @param bool $disable_footer
+     */
+    public function disableFooter($disable_footer = true)
+    {
+        $this->disable_footer = !$disable_footer;
     }
 
     /**
@@ -238,13 +253,14 @@ class Form implements Renderable
         }
 
         return [
-            'fields'     => $this->fields,
-            'attributes' => $this->formatAttribute(),
-            'method'     => $this->attributes['method'],
-            'fieldWidth' => $this->attributes['fieldWidth'],
-            'labelWidth' => $this->attributes['labelWidth'],
-            'rules' => $this->getRules(),
-            'rules_message' => $this->getRuleMessages()
+            'fields'        => $this->fields,
+            'attributes'    => $this->formatAttribute(),
+            'method'        => $this->attributes['method'],
+            'fieldWidth'    => $this->attributes['fieldWidth'],
+            'labelWidth'    => $this->attributes['labelWidth'],
+            'rules'         => $this->getRules(),
+            'rules_message' => $this->getRuleMessages(),
+            'disable_footer'   => $this->disable_footer,
         ];
     }
 
@@ -342,8 +358,10 @@ class Form implements Renderable
         if ($validationMessages = $this->validationMessages($data)) {
             return back()->withInput()->withErrors($validationMessages);
         }
+
         return self::$VALID;
     }
+
     /**
      * Collect rules of all fields.
      *
@@ -353,11 +371,12 @@ class Form implements Renderable
     {
         $rules = [];
         foreach ($this->fields as $item) {
-            if(!empty($item->getRules())){
+            if (!empty($item->getRules())) {
                 $rules[$item->id] = $item->getRules();
             }
         }
         $this->Rules = $rules;
+
         return $rules;
     }
 
@@ -369,12 +388,13 @@ class Form implements Renderable
     public function getRuleMessages()
     {
         $rules = [];
-        foreach ($this->fields as $item ) {
+        foreach ($this->fields as $item) {
             foreach ($item->validationMessages as $key => $value) {
                 $rules[$key] = $value;
             }
         }
         $this->RuleMessages = $rules;
+
         return $rules;
     }
 
