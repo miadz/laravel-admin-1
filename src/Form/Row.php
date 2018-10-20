@@ -101,6 +101,16 @@ class Row implements Renderable
     }
 
     /**
+     * Get fields of this row.
+     *
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
      * Set width for a incomming field.
      *
      * @param int $width

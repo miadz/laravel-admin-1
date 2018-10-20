@@ -67,11 +67,37 @@ class Tab
     {
         call_user_func($content, $this->form);
 
+<<<<<<< HEAD
         $all = $this->form->builder()->removeReservedFields()->fields();
+=======
+        $fields = clone $this->form->builder()->fields();
+>>>>>>> upstream/master
 
-        $fields = $all->slice($this->offset);
+        $all = $fields->toArray();
 
-        $this->offset = $all->count();
+        foreach ($this->form->rows as $row) {
+            $rowFields = array_map(function ($field) {
+                return $field['element'];
+            }, $row->getFields());
+
+            $match = false;
+
+            foreach ($rowFields as $field) {
+                if (($index = array_search($field, $all)) !== false) {
+                    if (!$match) {
+                        $fields->put($index, $row);
+                    } else {
+                        $fields->pull($index);
+                    }
+
+                    $match = true;
+                }
+            }
+        }
+
+        $fields = $fields->slice($this->offset);
+
+        $this->offset += $fields->count();
 
         return $fields;
     }
