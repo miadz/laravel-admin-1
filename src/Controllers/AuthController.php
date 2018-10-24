@@ -111,32 +111,7 @@ class AuthController extends Controller
      */
     protected function settingForm()
     {
-<<<<<<< HEAD
-
-        return Administrator::form(function (Form $form) {
-            $form->display('username', trans('admin.username'));
-            $form->text('name', trans('admin.name'))->rules('required');
-            $form->image('avatar', trans('admin.avatar'));
-            $rule_email ='email|' . Rule::unique(config('admin.database.users_table'),'email')->ignore(auth_admin_user()->id, 'id');
-            $form->email('email', trans('admin.email'))->rules($rule_email);
-            $form->password('password', trans('admin.password'))->rules('confirmed|required');
-            $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')
-                ->default(function ($form) {
-                    return $form->model()->password;
-                });
-
-            $form->setAction(admin_base_path('auth/setting'));
-
-            $form->ignore(['password_confirmation']);
-
-            $form->saving(function (Form $form) {
-                if ($form->password && $form->model()->password != $form->password) {
-                    $form->password = bcrypt($form->password);
-                }
-            });
-=======
         $class = config('admin.database.users_model');
->>>>>>> upstream/master
 
         $form = new Form(new $class());
 

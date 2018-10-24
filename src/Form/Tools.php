@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 class Tools implements Renderable
 {
     use TFormTools;
+
     /**
      * @var Builder
      */

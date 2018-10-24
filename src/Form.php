@@ -192,6 +192,7 @@ class Form implements Renderable
      * @var array
      */
     public $rows = [];
+
     private $originalInput;
 
     /**
@@ -267,39 +268,6 @@ class Form implements Renderable
     }
 
     /**
-<<<<<<< HEAD
-     * @param $id
-     *
-     * @return $this
-     */
-    public function view($id)
-    {
-        $this->builder->setMode(Builder::MODE_VIEW);
-        $this->builder->setResourceId($id);
-
-        $this->setFieldValue($id);
-
-        return $this;
-    }
-
-    /**
-     * @param $id
-     *
-     * @return $this
-     */
-    public function show($id)
-    {
-        $this->builder->setMode(Builder::MODE_SHOW);
-        $this->builder->setResourceId($id);
-
-        $this->setFieldValue($id);
-
-        return $this;
-    }
-
-    /**
-=======
->>>>>>> upstream/master
      * Use tab to split form.
      *
      * @param string  $title

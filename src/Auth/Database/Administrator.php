@@ -7,24 +7,15 @@ use App\User\Controllers\Auth\Traits\CanResetPassword;
 use Encore\Admin\Traits\AdminBuilder;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-<<<<<<< HEAD
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as _AuthenticatableContract;
-//use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-=======
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
->>>>>>> upstream/master
 
 /**
  * Class Administrator.
  * @mixin \Eloquent
  * @property Role[] $roles
  */
-class Administrator extends Model implements _AuthenticatableContract,
-//    AuthorizableContract,
-    CanResetPasswordContract
+class Administrator extends Model
 {
     use Authenticatable, AdminBuilder, HasPermissions,TAdmin, CanResetPassword;
 

@@ -284,21 +284,23 @@ class Form implements Renderable
         }
 
         return [
-<<<<<<< HEAD
+
             'fields'        => $this->fields,
             'attributes'    => $this->formatAttribute(),
             'method'        => $this->attributes['method'],
+            'buttons'    => $this->buttons,
+
             'fieldWidth'    => $this->attributes['fieldWidth'],
             'labelWidth'    => $this->attributes['labelWidth'],
             'rules'         => $this->getRules(),
             'rules_message' => $this->getRuleMessages(),
             'disable_footer'   => $this->disable_footer,
-=======
-            'fields'     => $this->fields,
-            'attributes' => $this->formatAttribute(),
-            'method'     => $this->attributes['method'],
-            'buttons'    => $this->buttons,
->>>>>>> upstream/master
+//======= todo check fieldWidth and ...
+//            'fields'     => $this->fields,
+//            'attributes' => $this->formatAttribute(),
+//            'method'     => $this->attributes['method'],
+//            'buttons'    => $this->buttons,
+//>>>>>>> upstream/master
         ];
     }
 

@@ -10,11 +10,7 @@ use Encore\Admin\Grid\Filter\Presenter\Presenter;
 use Encore\Admin\Grid\Filter\Presenter\Radio;
 use Encore\Admin\Grid\Filter\Presenter\Select;
 use Encore\Admin\Grid\Filter\Presenter\Text;
-<<<<<<< HEAD
-use Lang;
-=======
 use Illuminate\Support\Collection;
->>>>>>> upstream/master
 
 /**
  * Class AbstractFilter.

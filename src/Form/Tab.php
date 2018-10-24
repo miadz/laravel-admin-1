@@ -67,11 +67,10 @@ class Tab
     {
         call_user_func($content, $this->form);
 
-<<<<<<< HEAD
-        $all = $this->form->builder()->removeReservedFields()->fields();
-=======
+//<<<<<<< HEAD /todo check
+//        $all = $this->form->builder()->removeReservedFields()->fields();
+//=======
         $fields = clone $this->form->builder()->fields();
->>>>>>> upstream/master
 
         $all = $fields->toArray();
 

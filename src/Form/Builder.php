@@ -93,8 +93,7 @@ class Builder
      */
     protected $view = 'admin::form';
 
-    /**
-<<<<<<< HEAD
+    /** //todo pull
      * @var
      */
     public $Rules = [];
@@ -108,13 +107,13 @@ class Builder
      * @var string
      */
     public $Title = '';
-=======
+
+    /*
      * Form title.
      *
      * @var string
      */
     protected $title;
->>>>>>> upstream/master
 
     /**
      * Builder constructor.
@@ -224,21 +223,13 @@ class Builder
     }
 
     /**
-<<<<<<< HEAD
-     * Set resource Id.
-=======
      * Get Resource id.
      *
->>>>>>> upstream/master
      * @return mixed
      */
     public function getResourceId()
     {
-<<<<<<< HEAD
-       return $this->id;
-=======
         return $this->id;
->>>>>>> upstream/master
     }
 
     /**
@@ -328,7 +319,7 @@ class Builder
         return $this;
     }
 
-    /**
+    /**todo check master
      * Set title for form.
      *
      * @param string $title
@@ -453,23 +444,12 @@ class Builder
     /**
      * @return string
      */
-    public function setTitle($title)
-    {
-        return $this->Title = $title;
-    }
-
-    /**
-     * @return string
-     */
     public function title()
     {
-<<<<<<< HEAD
-        if ($this->Title != "") return $this->Title;
-=======
+
         if ($this->title) {
             return $this->title;
         }
->>>>>>> upstream/master
 
         if ($this->mode == static::MODE_CREATE) {
             return trans('admin.create');

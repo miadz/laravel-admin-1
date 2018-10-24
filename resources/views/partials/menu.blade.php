@@ -17,19 +17,13 @@
     @else
         <li class="treeview">
             <a href="#">
-<<<<<<< HEAD
-                <i class="fa {{$item['icon']}}"></i>
-                <span>{{$item['title']}}</span>
-                <i class="fa fa-angle-left pull-left"></i>
-=======
                 <i class="fa {{ $item['icon'] }}"></i>
                 @if (Lang::has($titleTranslation = 'admin.menu_titles.' . trim(str_replace(' ', '_', strtolower($item['title'])))))
                     <span>{{ __($titleTranslation) }}</span>
                 @else
                     <span>{{ $item['title'] }}</span>
                 @endif
-                <i class="fa fa-angle-left pull-right"></i>
->>>>>>> upstream/master
+                <i class="fa fa-angle-left @if(config('admin.layout_direction') == 'ltr') pull-right @else pull-left @endif"></i>
             </a>
             <ul class="treeview-menu">
                 @foreach($item['children'] as $item)

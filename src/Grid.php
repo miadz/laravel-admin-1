@@ -18,21 +18,16 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
-<<<<<<< HEAD
+use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Schema;
-=======
->>>>>>> upstream/master
-use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
 
 class Grid
 {
-<<<<<<< HEAD
+
     use TCustomTools;
-=======
     use HasElementNames;
 
->>>>>>> upstream/master
     /**
      * The grid data model instance.
      *
@@ -237,19 +232,13 @@ class Grid
 
         if ($this->builder) {
             call_user_func($this->builder, $this);
-<<<<<<< HEAD
-            if ($this->option('useExporter')) {
-                (new Exporter($this))->resolve($this->exporter)->withScope($scope)->export();
-            }
-            exit();
-=======
 
+            //todo report bug  if ($this->option('useExporter')) {
             $this->getExporter($scope)->export();
         }
 
         if ($forceExport) {
             $this->getExporter($scope)->export();
->>>>>>> upstream/master
         }
     }
 
@@ -732,15 +721,13 @@ class Grid
     {
         $input = array_merge(Input::all(), Exporter::formatExportQuery($scope, $args));
 
-<<<<<<< HEAD
-        return $this->resource() . '?' . http_build_query($input);
-=======
+
         if ($constraints = $this->model()->getConstraints()) {
             $input = array_merge($input, $constraints);
         }
 
         return $this->resource().'?'.http_build_query($input);
->>>>>>> upstream/master
+
     }
 
     /**

@@ -287,17 +287,12 @@ EOT;
         $this->script = <<<EOT
 
 $.ajax($ajaxOptions).done(function(data) {
-<<<<<<< HEAD
-  $("{$this->getElementClassSelector()}").select2({
-     dir: "$this->direction",
-     language : "$this->local",
-     data: data
-  });
-=======
 
   var select = $("{$this->getElementClassSelector()}");
 
   select.select2({
+    dir: "$this->direction",
+    language : "$this->local",
     data: data,
     $configs
   });
@@ -308,7 +303,6 @@ $.ajax($ajaxOptions).done(function(data) {
     value = value.split(',');
     select.select2('val', value);
   }
->>>>>>> upstream/master
 });
 
 EOT;
@@ -441,16 +435,10 @@ EOT;
     {
         $configs = array_merge([
             'allowClear'  => true,
-<<<<<<< HEAD
-            'placeholder' => $this->label,
-            'dir'=> "$this->direction",
-            'language' => "$this->local"
-=======
             'placeholder' => [
                 'id'   => '',
                 'text' => $this->label,
             ],
->>>>>>> upstream/master
         ], $this->config);
 
         $configs = json_encode($configs);

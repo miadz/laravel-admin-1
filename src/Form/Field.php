@@ -210,7 +210,7 @@ class Field implements Renderable
     protected $horizontal = true;
 
     /**
-<<<<<<< HEAD
+     * todo patch
      * default local use for translate field label
      * or used in jquery plugin as local or language.
      *
@@ -224,7 +224,8 @@ class Field implements Renderable
      * @var string
      */
     protected $direction = "ltr";
-=======
+
+    /*
      * column data format.
      *
      * @var \Closure
@@ -240,7 +241,7 @@ class Field implements Renderable
      * @var array
      */
     protected $labelClass = [];
->>>>>>> upstream/master
+
 
     /**
      * Field constructor.
@@ -890,30 +891,29 @@ class Field implements Renderable
     public function getViewElementClasses()
     {
         if ($this->horizontal) {
-<<<<<<< HEAD
-            $this->viewClass = [
-                'label'      => "col-sm-{$this->width['label']}",
-=======
+
             return [
                 'label'      => "col-sm-{$this->width['label']} {$this->getLabelClass()}",
->>>>>>> upstream/master
                 'field'      => "col-sm-{$this->width['field']}",
                 'form-group' => "form-group ",
             ];
 
-            return $this->viewClass;
+
         }
 
-<<<<<<< HEAD
-        return $this->viewClass;
+        return ['label'      => "{$this->getLabelClass()}",
+                'field'      => '',
+                'form-group' => ''
+        ];
     }
-
 
     /**
      *  set View Element Classes
      */
     public function setViewElementClasses($label, $field, $form_group)
     {
+        //todo check origin
+
         if ($this->horizontal) {
             $this->viewClass = [
                 'label'      => "col-sm-{$this->width['label']} $label",
@@ -921,9 +921,9 @@ class Field implements Renderable
                 'form-group' => "form-group $form_group",
             ];
         }
-=======
+
         return ['label' => "{$this->getLabelClass()}", 'field' => '', 'form-group' => ''];
->>>>>>> upstream/master
+
     }
 
     /**
@@ -1145,8 +1145,7 @@ class Field implements Renderable
         return $this->script;
     }
 
-    /**
-<<<<<<< HEAD
+    /** todo pull
      * Set direction setting.
      * @param string $dir ltr or rtl
      * @return $this
@@ -1168,7 +1167,9 @@ class Field implements Renderable
         $this->local = $local;
 
         return $this;
-=======
+    }
+
+    /*
      * If this field should render.
      *
      * @return bool
@@ -1180,7 +1181,7 @@ class Field implements Renderable
         }
 
         return true;
->>>>>>> upstream/master
+
     }
 
     /**

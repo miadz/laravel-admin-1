@@ -86,16 +86,6 @@ class Menu extends Model
      *
      * @return void
      */
-<<<<<<< HEAD
-//    protected static function boot()
-//    {
-//        parent::boot();
-//
-//        static::deleting(function ($model) {
-//            $model->roles()->detach();
-//        });
-//    }
-=======
     protected static function boot()
     {
         static::treeBoot();
@@ -104,5 +94,4 @@ class Menu extends Model
             $model->roles()->detach();
         });
     }
->>>>>>> upstream/master
 }

@@ -158,11 +158,7 @@ EOT;
      *
      * @return string
      */
-<<<<<<< HEAD
-    protected function ___editAction()
-=======
     protected function renderEdit()
->>>>>>> upstream/master
     {
         return <<<EOT
 <a href="{$this->getResource()}/{$this->getKey()}/edit">
@@ -176,11 +172,7 @@ EOT;
      *
      * @return string
      */
-<<<<<<< HEAD
-    protected function ___deleteAction()
-=======
     protected function renderDelete()
->>>>>>> upstream/master
     {
         $deleteConfirm = trans('admin.delete_confirm');
         $confirm = trans('admin.confirm');

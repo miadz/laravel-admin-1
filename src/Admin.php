@@ -209,33 +209,8 @@ class Admin
      */
     public function registerAuthRoutes()
     {
-<<<<<<< HEAD
-//        $attributes = [
-//            'prefix'     => config('admin.route.prefix'),
-//            'namespace'  => 'Encore\Admin\Controllers',
-//            'middleware' => config('admin.route.middleware'),
-//        ];
 
-//        Route::group($attributes, function ($router) {
-//
-//            /* @var \Illuminate\Routing\Router $router */
-//            $router->group([], function ($router) {
-//
-//                /* @var \Illuminate\Routing\Router $router */
-//                $router->resource('auth/users', 'UserController');
-//                $router->resource('auth/roles', 'RoleController');
-//                $router->resource('auth/permissions', 'PermissionController');
-//                $router->resource('auth/menu', 'MenuController', ['except' => ['create']]);
-//                $router->resource('auth/logs', 'LogController', ['only' => ['index', 'destroy']]);
-//            });
-//
-//            $router->get('auth/login', 'AuthController@getLogin');
-//            $router->post('auth/login', 'AuthController@postLogin');
-//            $router->get('auth/logout', 'AuthController@getLogout');
-//            $router->get('auth/setting', 'AuthController@getSetting');
-//            $router->put('auth/setting', 'AuthController@putSetting');
-//        });
-=======
+
         $attributes = [
             'prefix'     => config('admin.route.prefix'),
             'middleware' => config('admin.route.middleware'),
@@ -263,7 +238,6 @@ class Admin
             $router->get('auth/setting', $authController.'@getSetting');
             $router->put('auth/setting', $authController.'@putSetting');
         });
->>>>>>> upstream/master
     }
 
     /**
