@@ -2,6 +2,8 @@
 
 namespace Encore\Admin\Controllers;
 
+use Encore\Admin\Form\Builder;
+
 trait HasResourceActions
 {
     /**
@@ -13,7 +15,7 @@ trait HasResourceActions
      */
     public function update($id)
     {
-        return $this->form()->update($id);
+        return $this->form(Builder::MODE_UPDATE, $id)->update($id);
     }
 
     /**
@@ -23,7 +25,7 @@ trait HasResourceActions
      */
     public function store()
     {
-        return $this->form()->store();
+        return $this->form(Builder::MODE_STORE, null)->store();
     }
 
     /**
@@ -35,7 +37,7 @@ trait HasResourceActions
      */
     public function destroy($id)
     {
-        if ($this->form()->destroy($id)) {
+        if ($this->form(Builder::MODE_DESTROY, $id)->destroy($id)) {
             $data = [
                 'status'  => true,
                 'message' => trans('admin.delete_succeeded'),
