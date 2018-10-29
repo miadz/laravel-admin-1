@@ -32,7 +32,7 @@
                 @endforeach
             </ol>
         @elseif(config('admin.enable_default_breadcrumb'))
-            <ol class="breadcrumb" style="margin-right: 30px;">
+            <ol class="breadcrumb" style="position: relative;margin-bottom: 10px;">
                 <li><a href="{{ admin_url('/') }}"><i class="fa fa-dashboard"></i>  {{ trans('admin.home') }}</a></li>
                 @for($i = 2; $i <= count(Request::segments()); $i++)
                     <li>
