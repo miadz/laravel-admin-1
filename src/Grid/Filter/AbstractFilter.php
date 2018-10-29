@@ -11,6 +11,7 @@ use Encore\Admin\Grid\Filter\Presenter\Radio;
 use Encore\Admin\Grid\Filter\Presenter\Select;
 use Encore\Admin\Grid\Filter\Presenter\Text;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class AbstractFilter.
