@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home'                     => 'خانه',
     'online'                => 'آنلاین',
     'login'                 => 'ورود',
     'logout'                => 'خروج',
