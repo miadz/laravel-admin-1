@@ -273,6 +273,8 @@ EOT;
         ];
         $configs = array_merge([
             'allowClear'         => true,
+            'dir'=> "$this->direction",
+            'language' => "$this->local",
             'placeholder'        => [
                 'id'        => '',
                 'text'      => trans('admin.choose'),
@@ -323,6 +325,8 @@ EOT;
     {
         $configs = array_merge([
             'allowClear'         => true,
+            'dir'=> "$this->direction",
+            'language' => "$this->local",
             'placeholder'        => $this->label,
             'minimumInputLength' => 1,
         ], $this->config);
@@ -435,6 +439,8 @@ EOT;
     {
         $configs = array_merge([
             'allowClear'  => true,
+            'dir'=> "$this->direction",
+            'language' => "$this->local",
             'placeholder' => [
                 'id'   => '',
                 'text' => $this->label,
