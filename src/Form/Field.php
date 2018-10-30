@@ -891,39 +891,52 @@ class Field implements Renderable
     public function getViewElementClasses()
     {
         if ($this->horizontal) {
+            $this->viewClass['label'] = "col-sm-{$this->width['label']} {$this->getLabelClass()} " . $this->viewClass['label'];
+            $this->viewClass['field'] = "col-sm-{$this->width['field']} " . $this->viewClass['field'];
+            $this->viewClass['form-group'] = "form-group " . $this->viewClass['form-group'];
 
-            return [
-                'label'      => "col-sm-{$this->width['label']} {$this->getLabelClass()}",
-                'field'      => "col-sm-{$this->width['field']}",
-                'form-group' => "form-group ",
-            ];
-
-
+            return $this->viewClass;
         }
 
-        return ['label'      => "{$this->getLabelClass()}",
-                'field'      => '',
-                'form-group' => ''
-        ];
+        $this->viewClass['label'] = "{$this->getLabelClass()} " . $this->viewClass['label'];
+
+        return $this->viewClass;
+    }
+
+    /**
+     *  add Form Group Element Classes
+     */
+    public function addFormGroupClasses($class)
+    {
+        $this->viewClass['form-group'] = $this->viewClass['form-group'] . " $class ";
+
+        return $this;
     }
 
     /**
      *  set View Element Classes
+     * @param string $label
+     * @param string $field
+     * @param string $form_group
      */
-    public function setViewElementClasses($label, $field, $form_group)
+    public function setViewElementClasses($label = '', $field = '', $form_group = '')
     {
-        //todo check origin
+        $this->viewClass['label'] = $label;
+        $this->viewClass['field'] = $field;
+        $this->viewClass['form-group'] = $form_group;
+    }
 
-        if ($this->horizontal) {
-            $this->viewClass = [
-                'label'      => "col-sm-{$this->width['label']} $label",
-                'field'      => "col-sm-{$this->width['field']} $field",
-                'form-group' => "form-group $form_group",
-            ];
-        }
-
-        return ['label' => "{$this->getLabelClass()}", 'field' => '', 'form-group' => ''];
-
+    /**
+     *  add View Element Classes
+     * @param string $label
+     * @param string $field
+     * @param string $form_group
+     */
+    public function addViewElementClasses($label = '', $field = '', $form_group = '')
+    {
+        $this->viewClass['label'] = "col-sm-{$this->width['label']} {$this->getLabelClass()} " . $label;
+        $this->viewClass['field'] = "col-sm-{$this->width['field']} " . $field;
+        $this->viewClass['form-group'] = "form-group " . $form_group;
     }
 
     /**
