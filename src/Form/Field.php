@@ -960,14 +960,11 @@ class Field implements Renderable
      */
     protected function getElementClass()
     {
-        if (!$this->elementClass) {
-            $name = $this->elementName ?: $this->formatName($this->column);
-
-            $this->elementClass = (array)str_replace([
-                '[',
-                ']'
-            ], '_', $name);
-        }
+        //        if (!$this->elementClass) {
+        $name = $this->elementName ?: $this->formatName($this->column);
+        $name = (array)str_replace(['[', ']'], '_', $name);
+        $this->addElementClass($name);
+        //        }
 
         return $this->elementClass;
     }
