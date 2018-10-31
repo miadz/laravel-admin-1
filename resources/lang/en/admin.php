@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home'                => 'Home',
     'online'                => 'Online',
     'login'                 => 'Login',
     'logout'                => 'Logout',
@@ -100,4 +101,5 @@ return [
     ],
 
     'menu_titles' => [],
+    'submit_loading_text'=>'Loading ...'
 ];

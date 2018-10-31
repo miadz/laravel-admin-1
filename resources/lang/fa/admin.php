@@ -106,4 +106,5 @@ return [
     ],
 
     'menu_titles'         => [],
+    'submit_loading_text'         => 'در حال ثبت ...',
 ];
