@@ -79,6 +79,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \App\Admin\Extensions\Form\Json  json($column, $label = '')
  * @method \App\Admin\Extensions\Form\CkEditor  ckeditor($column, $label = '')
  * @method \App\Admin\Extensions\Form\MultipleFileConverter  multiple_file_converter($column, $label = '')
+ * @method \Jxlwqq\StarRating\StarRating  starRating($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -1262,7 +1263,9 @@ class Form implements Renderable
     {
         $this->builder()->fields()->each(function ($field) use ($fieldWidth, $labelWidth) {
             /* @var Field $field */
-            $field->setWidth($fieldWidth, $labelWidth);
+            if ($field->getWidth()['form_can_setwidth']) {
+                $field->setWidth($fieldWidth, $labelWidth);
+            }
         });
 
         $this->builder()->setWidth($fieldWidth, $labelWidth);

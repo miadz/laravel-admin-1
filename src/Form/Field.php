@@ -187,8 +187,9 @@ class Field implements Renderable
      * @var array
      */
     protected $width = [
-        'label' => 2,
-        'field' => 8,
+        'label'             => 2,
+        'field'             => 8,
+        'form_can_setwidth' => true,
     ];
 
     /**
@@ -436,17 +437,21 @@ class Field implements Renderable
 
     /**
      * Set width for field and label.
+     * by default $this->width['form_can_setwidth'] is true,but with $form_can_setwidth can disable it and set false
      *
-     * @param int $field
-     * @param int $label
+     * @param int  $field
+     * @param int  $label
+     * @param bool $form_can_setwidth ,
      *
      * @return $this
      */
-    public function setWidth($field = 8, $label = 2)
+    public function setWidth($field = 8, $label = 2, $form_can_setwidth = false)
     {
+
         $this->width = [
-            'label' => $label,
-            'field' => $field,
+            'label'             => $label,
+            'field'             => $field,
+            'form_can_setwidth' => $form_can_setwidth,
         ];
 
         return $this;
@@ -962,8 +967,12 @@ class Field implements Renderable
     {
         //        if (!$this->elementClass) {
         $name = $this->elementName ?: $this->formatName($this->column);
-        $name = (array)str_replace(['[', ']'], '_', $name);
+        $name = (array)str_replace([
+            '[',
+            ']'
+        ], '_', $name);
         $this->addElementClass($name);
+
         //        }
 
         return $this->elementClass;
@@ -1177,6 +1186,14 @@ class Field implements Renderable
         $this->local = $local;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /*
