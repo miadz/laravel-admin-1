@@ -25,7 +25,7 @@ class Field implements Renderable
      *
      * @var array|string
      */
-    public $id;
+    protected $id;
 
     /**
      * Element value.
@@ -1194,6 +1194,16 @@ class Field implements Renderable
     public function getWidth()
     {
         return $this->width;
+    }
+
+    /**
+     * Get form id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /*
