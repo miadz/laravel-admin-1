@@ -80,6 +80,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \App\Admin\Extensions\Form\CkEditor  ckeditor($column, $label = '')
  * @method \App\Admin\Extensions\Form\MultipleFileConverter  multiple_file_converter($column, $label = '')
  * @method \Jxlwqq\StarRating\StarRating  starRating($column, $label = '')
+ * @method \App\Admin\Extensions\Form\starRating  _starRating($column, $label = '')
  */
 class Form implements Renderable
 {
@@ -425,7 +426,7 @@ class Form implements Renderable
      */
     protected function prepare($data = [])
     {
-        $this->originalInput = $data;
+        $this->originalInputs = $data;
         if (($response = $this->callSubmitted()) instanceof Response) {
             return $response;
         }
@@ -1437,6 +1438,16 @@ class Form implements Renderable
     }
 
     /**
+     * Get All inputs data.
+     *
+     * @return array|mixed
+     */
+    public function allInput()
+    {
+        return $this->inputs;
+    }
+
+    /**
      * Get or set input data.
      *
      * @param string $key
@@ -1447,10 +1458,20 @@ class Form implements Renderable
     public function originalInput($key, $value = null)
     {
         if (is_null($value)) {
-            return array_get($this->originalInput, $key);
+            return array_get($this->originalInputs, $key);
         }
 
-        return array_set($this->originalInput, $key, $value);
+        return array_set($this->originalInputs, $key, $value);
+    }
+
+    /**
+     * Get All original input data.
+     *
+     * @return array|mixed
+     */
+    public function allOriginalInput()
+    {
+        return $this->originalInputs;
     }
 
     /**
