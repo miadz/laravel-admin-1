@@ -552,9 +552,9 @@ class Form implements Renderable
 
         $data = $this->handleEditable($data);
 
-        $isColumnRelationUpdate = $this->isColumnRelationUpdate($data);
-
-        $data = $this->handleColumnRelationUpdate($data);
+//        $isColumnRelationUpdate = $this->isColumnRelationUpdate($data);
+//
+//        $data = $this->handleColumnRelationUpdate($data);
 
         $data = $this->handleFileDelete($data);
 
@@ -572,7 +572,8 @@ class Form implements Renderable
 
         // Handle validation errors.
         if ($validationMessages = $this->validationMessages($data)) {
-            if (!$isEditable && !$isColumnRelationUpdate) {
+//            if (!$isEditable && !$isColumnRelationUpdate) {
+            if (!$isEditable) {
                 return back()->withInput()->withErrors($validationMessages);
             } else {
                 return response()->json(['errors' => array_dot($validationMessages->getMessages())], 422);
