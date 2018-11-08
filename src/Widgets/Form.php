@@ -412,7 +412,7 @@ class Form implements Renderable
         $rules = [];
         foreach ($this->fields as $item) {
             if (!empty($item->getRules())) {
-                $rules[$item->id] = $item->getRules();
+                $rules[$item->getId()] = $item->getRules();
             }
         }
         $this->Rules = $rules;
