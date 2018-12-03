@@ -552,10 +552,6 @@ class Form implements Renderable
 
         $data = $this->handleEditable($data);
 
-//        $isColumnRelationUpdate = $this->isColumnRelationUpdate($data);
-//
-//        $data = $this->handleColumnRelationUpdate($data);
-
         $data = $this->handleFileDelete($data);
 
         if ($this->handleOrderable($id, $data)) {
@@ -686,34 +682,6 @@ class Form implements Renderable
     protected function handleEditable(array $input = [])
     {
         if (array_key_exists('_editable', $input)) {
-            $name = $input['name'];
-            $value = $input['value'];
-
-            array_forget($input, [
-                'pk',
-                'value',
-                'name'
-            ]);
-            array_set($input, $name, $value);
-        }
-
-        return $input;
-    }
-
-    /**
-     * Check if request is from editable.
-     *
-     * @param array $input
-     *
-     * @return bool
-     */
-    protected function isColumnRelationUpdate(array $input = [])
-    {
-        return array_key_exists('_col_relation', $input);
-    }
-    protected function handleColumnRelationUpdate(array $input = [])
-    {
-        if (array_key_exists('_col_relation', $input)) {
             $name = $input['name'];
             $value = $input['value'];
 
