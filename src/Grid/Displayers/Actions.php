@@ -232,26 +232,4 @@ SCRIPT;
 EOT;
     }
 
-    protected function editAction()
-    {
-        $_edit =  trans('admin.edit');
-        return <<<EOT
-<a class="btn btn-xs btn-default" href="{$this->getResource()}/{$this->getKey()}/edit">
-    <i class="fa fa-edit"></i> $_edit
-</a>
-EOT;
-
-    }
-
-    protected function deleteAction()
-    {
-        $this->___deleteAction();
-        $_delete =  trans('admin.delete');
-        return <<<EOT
-<a href="javascript:void(0);" data-id="{$this->getKey()}" class="grid-row-delete btn btn-xs btn-danger">
-    <i class="fa fa-trash"></i> $_delete
-</a>
-EOT;
-    }
-
 }
