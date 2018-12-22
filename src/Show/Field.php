@@ -142,6 +142,15 @@ class Field implements Renderable
     {
         $label = $label ?: ucfirst($this->name);
 
+        $trans_key = 'validation.attributes.' . strtolower($label);
+        if (isset($arguments[0])) {
+            $label = $arguments[0];
+        } else if (\Lang::has($trans_key)) {
+            $label = \Lang::get($trans_key);
+        } else {
+            $label = ucfirst($label);
+        }
+
         return str_replace(['.', '_'], ' ', $label);
     }
 
@@ -183,7 +192,6 @@ class Field implements Renderable
             if (is_null($value)) {
                 return $default;
             }
-
             return array_get($values, $value, $default);
         });
     }
