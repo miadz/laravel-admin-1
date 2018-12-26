@@ -48,11 +48,11 @@ class Builder
      * Modes constants.
      */
     const MODE_EDIT = 'edit';
-    const MODE_UPDATE = 'update';
+//    const MODE_UPDATE = 'update';
     const MODE_CREATE = 'create';
-    const MODE_STORE = 'store';
+//    const MODE_STORE = 'store';
     const MODE_SHOW = 'show';
-    const MODE_DESTROY = 'destroy';
+//    const MODE_DESTROY = 'destroy';
 
     /**
      * Form action mode, could be create|view|edit.
