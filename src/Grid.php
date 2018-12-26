@@ -16,6 +16,7 @@ use Encore\Admin\Grid\Row;
 use Encore\Admin\Grid\Tools;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Relations;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
@@ -398,7 +399,7 @@ class Grid
     /**
      * Get Grid model.
      *
-     * @return Model
+     * @return Model|Eloquent|Builder
      */
     public function model()
     {
