@@ -25,7 +25,7 @@ class InfoBox extends Widget implements Renderable
      * @param string $link
      * @param string $info
      */
-    public function __construct($name, $icon, $class, $link, $info, $more_text = null, $bg_color = null)
+    public function __construct($name, $icon, $class, $link, $info_html, $more_text = null, $bg_color = null)
     {
         if ($more_text == null) $more_text = trans('admin.more');
 
@@ -37,12 +37,20 @@ class InfoBox extends Widget implements Renderable
             'name'      => $name,
             'icon'      => $icon,
             'link'      => $link,
-            'info'      => $info,
+            'info_html'      => $info_html,
             'more_text' => $more_text,
         ];
+
+        $style = [
+            "cursor: pointer",
+           "color: white !important"
+        ];
         if ($bg_color != null) {
-            $this->style("background-color: {$bg_color} !important; color: white !important;");
+            $style = array_merge($style,["background-color: {$bg_color} !important"]);
         }
+
+        $this->style(implode(";",$style));
+
         $this->class("small-box $class");
     }
 
