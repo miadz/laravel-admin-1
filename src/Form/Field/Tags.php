@@ -155,7 +155,7 @@ class Tags extends Field
         }
 
         if (is_array($value) && !Arr::isAssoc($value)) {
-            $value = implode(',', $value);
+            $value = implode($this->TokenSeparator, $value);
         }
 
         return $value;
