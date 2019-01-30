@@ -147,7 +147,7 @@ class Actions extends AbstractDisplayer
     protected function renderView()
     {
         return <<<EOT
-<a href="{$this->getResource()}/{$this->getKey()}">
+<a class="btn btn-sm btn-primary" href="{$this->getResource()}/{$this->getKey()}">
     <i class="fa fa-eye"></i>
 </a>
 EOT;
@@ -161,7 +161,7 @@ EOT;
     protected function renderEdit()
     {
         return <<<EOT
-<a href="{$this->getResource()}/{$this->getKey()}/edit">
+<a class="btn btn-sm btn-success" href="{$this->getResource()}/{$this->getKey()}/edit">
     <i class="fa fa-edit"></i>
 </a>
 EOT;
@@ -224,9 +224,8 @@ $('.{$this->grid->getGridRowName()}-delete').unbind('click').click(function() {
 SCRIPT;
 
         Admin::script($script);
-
         return <<<EOT
-<a href="javascript:void(0);" data-id="{$this->getKey()}" class="{$this->grid->getGridRowName()}-delete">
+<a href="javascript:void(0);" data-id="{$this->getKey()}" class="{$this->grid->getGridRowName()}-delete btn btn-sm btn-danger">
     <i class="fa fa-trash"></i>
 </a>
 EOT;
