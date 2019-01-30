@@ -23,6 +23,11 @@ class Tab
     protected $offset = 0;
 
     /**
+     * @var Collection
+     */
+    protected $fields;
+
+    /**
      * Tab constructor.
      *
      * @param Form $form
@@ -46,7 +51,7 @@ class Tab
     public function append($title, \Closure $content, $active = false)
     {
         $fields = $this->collectFields($content);
-
+        $this->fields = $fields;
         $id = 'form-' . ($this->tabs->count() + 1);
         //if define tab and row inside of tab ,you cant define row in form or simple field in tab
         $rows = $this->form->builder()->getRows();
@@ -127,5 +132,14 @@ class Tab
     public function isEmpty()
     {
         return $this->tabs->isEmpty();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getLastAddedTabFields()
+    {
+        return $this->fields;
+//        return $this->tabs->last()['fields'];
     }
 }
