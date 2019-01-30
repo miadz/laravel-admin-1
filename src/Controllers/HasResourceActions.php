@@ -15,7 +15,7 @@ trait HasResourceActions
      */
     public function update($id)
     {
-        return $this->form(Builder::MODE_UPDATE, $id)->update($id);
+        return $this->form(Builder::MODE_EDIT, $id)->update($id);
     }
 
     /**
@@ -25,7 +25,7 @@ trait HasResourceActions
      */
     public function store()
     {
-        return $this->form(Builder::MODE_STORE, null)->store();
+        return $this->form(Builder::MODE_CREATE, null)->store();
     }
 
     /**
@@ -37,7 +37,7 @@ trait HasResourceActions
      */
     public function destroy($id)
     {
-        if ($this->form(Builder::MODE_DESTROY, $id)->destroy($id)) {
+        if ($this->form(null, $id)->destroy($id)) {
             $data = [
                 'status'  => true,
                 'message' => trans('admin.delete_succeeded'),
