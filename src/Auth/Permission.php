@@ -23,7 +23,10 @@ class Permission
 
         if (is_array($permission)) {
             collect($permission)->each(function ($permission) {
-                call_user_func([Permission::class, 'check'], $permission);
+                call_user_func([
+                    Permission::class,
+                    'check'
+                ], $permission);
             });
 
             return;
@@ -32,6 +35,33 @@ class Permission
         if (Auth::guard('admin')->user()->cannot($permission)) {
             static::error();
         }
+    }
+
+    /**
+     * If current user is administrator.
+     *
+     * @return mixed
+     */
+    public static function isAdministrator()
+    {
+        return Auth::guard('admin')->user()->isRole('administrator');
+    }
+
+    /**
+     * Send error response page.
+     */
+    public static function error()
+    {
+        $response = response(Admin::content()->withError(trans('admin.deny')));
+
+        if (request()->pjax() || request()->ajax()) {
+
+            admin_toastr(trans('admin.deny'), "error");
+            return toastr_json();
+
+        }
+
+        Pjax::respond($response);
     }
 
     /**
@@ -78,25 +108,5 @@ class Permission
         if (Auth::guard('admin')->user()->inRoles($roles)) {
             static::error();
         }
-    }
-
-    /**
-     * Send error response page.
-     */
-    public static function error()
-    {
-        $response = response(Admin::content()->withError(trans('admin.deny')));
-
-        Pjax::respond($response);
-    }
-
-    /**
-     * If current user is administrator.
-     *
-     * @return mixed
-     */
-    public static function isAdministrator()
-    {
-        return Auth::guard('admin')->user()->isRole('administrator');
     }
 }
