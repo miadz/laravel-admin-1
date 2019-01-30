@@ -163,3 +163,20 @@ if (!function_exists('array_delete')) {
         }
     }
 }
+
+if (!function_exists('toastr_json')) {
+
+    function toastr_json()
+    {
+        $toastr_res = [];
+        if (\Session::has('toastr')) {
+            $toastr = \Session::get('toastr');
+            $toastr_res['type'] = array_get($toastr->get('type'), 0, 'success');
+            $toastr_res['message'] = array_get($toastr->get('message'), 0, '');
+            $toastr_res['options'] = json_encode($toastr->get('options', []));
+            \Session::forget('toastr');
+        }
+
+        return response()->json($toastr_res);
+    }
+}
