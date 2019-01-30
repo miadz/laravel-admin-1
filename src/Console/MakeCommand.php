@@ -128,7 +128,12 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
+
         if ($this->option('model')) {
+//            $stub = resource_path('views/admin/stubs/controller.stub');
+            $stub = resource_path('views/encore/stubs/controller.stub');
+            if (file_exists($stub))  return $stub;
+
             return __DIR__.'/stubs/controller.stub';
         }
 
