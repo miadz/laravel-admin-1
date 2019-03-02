@@ -224,7 +224,7 @@ class Field implements Renderable
      *
      * @var string
      */
-    protected $direction = "ltr";
+    protected $direction = "rtl";
 
     /*
      * column data format.
@@ -1221,6 +1221,24 @@ class Field implements Renderable
 
         return true;
 
+    }
+
+    /*
+     * hide this field in rendering.
+     * or a server side field
+     * important : do not set rules for this field
+     * @return $this
+     */
+    public function hideInForm()
+    {
+        $this->display = false;
+
+        return $this;
+    }
+
+    public function isHide()
+    {
+        return $this->display == false;
     }
 
     /**

@@ -32,6 +32,8 @@ class Textarea extends Field
      */
     public function render()
     {
+        $this->addElementClass($this->direction);
+
         if (is_array($this->value)) {
             $this->value = json_encode($this->value, JSON_PRETTY_PRINT);
         }
