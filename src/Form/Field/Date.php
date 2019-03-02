@@ -15,6 +15,19 @@ class Date extends Text
 
     protected $format = 'YYYY-MM-DD';
 
+    /**
+     * Create a new File instance.
+     *
+     * @param string $column
+     * @param array  $arguments
+     */
+    public function __construct($column, $arguments = [])
+    {
+        parent::__construct($column, $arguments);
+        $this->options['format'] = $this->format;
+        $this->options['allowInputToggle'] = true;
+    }
+
     public function format($format)
     {
         $this->format = $format;
@@ -33,9 +46,6 @@ class Date extends Text
 
     public function render()
     {
-        $this->options['format'] = $this->format;
-        $this->options['locale'] = config('app.locale');
-        $this->options['allowInputToggle'] = true;
 
         $this->script = "$('{$this->getElementClassSelector()}').datetimepicker(".json_encode($this->options).');';
 
