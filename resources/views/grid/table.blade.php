@@ -5,13 +5,9 @@
     </div>
     @endif
 
-<<<<<<< HEAD
-        <div class="pull-left">
-            {!! $grid->renderFilter() !!}
-=======
+
     <div class="box-header with-border">
         <div class="pull-right">
->>>>>>> upstream/master
             {!! $grid->renderExportButton() !!}
             {!! $grid->renderCreateButton() !!}
         </div>
