@@ -173,7 +173,7 @@ if (!function_exists('toastr_json')) {
             $toastr = \Session::get('toastr');
             $toastr_res['type'] = array_get($toastr->get('type'), 0, 'success');
             $toastr_res['message'] = array_get($toastr->get('message'), 0, '');
-            $toastr_res['options'] = json_encode($toastr->get('options', []));
+            $toastr_res['options'] = $toastr->get('options', []);
             \Session::forget('toastr');
         }
 

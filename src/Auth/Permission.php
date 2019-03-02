@@ -17,6 +17,7 @@ class Permission
      */
     public static function check($permission)
     {
+
         if (static::isAdministrator()) {
             return true;
         }
@@ -54,11 +55,9 @@ class Permission
     {
         $response = response(Admin::content()->withError(trans('admin.deny')));
 
-        if (request()->pjax() || request()->ajax()) {
-
+        if (request()->ajax() && !request()->pjax()) {
             admin_toastr(trans('admin.deny'), "error");
-            return toastr_json();
-
+            throw new \Illuminate\Http\Exceptions\HttpResponseException( toastr_json());//or retrun
         }
 
         Pjax::respond($response);
